@@ -11,92 +11,119 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   String name = "";
+  final _formKey = GlobalKey<FormState>();
+
+  moveToHome(BuildContext cont) {
+    if (_formKey.currentState!.validate()) {
+      onTap:
+      Navigator.push(
+          context, new MaterialPageRoute(builder: (context) => new HomePage()));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              new Image.asset(
-                "assets/images/login.png",
-                fit: BoxFit.cover,
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              Text("welcome $name",
-                  style: TextStyle(
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold,
-                  )),
-              SizedBox(
-                height: 20.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 48.0, horizontal: 60.0),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        hintText: "Enter Username",
-                        labelText: "Username",
-                      ),
-                      onChanged: (value) {
-                        name = value;
-                        setState(() {});
-                      },
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "Enter password",
-                        labelText: "password",
-                      ),
-                    ),
-                    SizedBox(
-                      height: 70.0,
-                    ),
-
-                    InkWell(
-                      onTap: () {
-                        onTap:
-                        Navigator.push(
-                            context,
-                            new MaterialPageRoute(
-                                builder: (context) => new HomePage()));
-                      },
-                      child: Container(
-                        width: 175,
-                        height: 65,
-                        //color: Colors.deepPurple,
-                        alignment: Alignment.center,
-                        child: Text("Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22)),
-                        decoration: BoxDecoration(
-                            color: Colors.deepPurple,
-                            borderRadius: BorderRadius.circular(8)),
-                      ),
-                    )
-                    //ElevatedButton(
-                    //    child: Text("Login"),
-                    //    style: TextButton.styleFrom(minimumSize: Size(100, 40)),
-                    //    onPressed: () {
-                    //      Navigator.push(
-                    //          context,
-                    //          new MaterialPageRoute(
-                    //              builder: (context) => new HomePage()));
-                    //    })
-                  ],
-                ),
-              )
-            ],
+    return Scaffold(
+      appBar: AppBar(
+          //title: Center(child: Text("Fitness App")),
           ),
-        ));
+      body: Center(
+          child: Container(
+              color: Colors.white,
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      new Image.asset(
+                        "assets/images/login.png",
+                        fit: BoxFit.cover,
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Text("welcome $name",
+                          style: TextStyle(
+                            fontSize: 45,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 48.0, horizontal: 60.0),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: InputDecoration(
+                                hintText: "Enter Username",
+                                labelText: "Username",
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Username Cannot Be Empty";
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                name = value;
+                                setState(() {});
+                              },
+                            ),
+                            TextFormField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: "Enter password",
+                                labelText: "password",
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password Cannot Be Empty";
+                                } else if (value.length < 6) {
+                                  return "Password should Be At Least 6";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+
+                            Material(
+                              color: Colors.deepPurple,
+                              borderRadius: BorderRadius.circular(8),
+                              child: InkWell(
+                                onTap: () => moveToHome(context),
+                                child: Container(
+                                  width: 175,
+                                  height: 65,
+                                  //color: Colors.deepPurple,
+                                  alignment: Alignment.center,
+                                  child: Text("Login",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22)),
+                                ),
+                              ),
+                            )
+                            //ElevatedButton(
+                            //    child: Text("Login"),
+                            //    style: TextButton.styleFrom(minimumSize: Size(100, 40)),
+                            //    onPressed: () {
+                            //      Navigator.push(
+                            //          context,
+                            //          new MaterialPageRoute(
+                            //              builder: (context) => new HomePage()));
+                            //    })
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ))),
+    );
   }
 }

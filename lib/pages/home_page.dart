@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("welcome to my app day $days with $name"),
+          child: Text("welcome to my app day $days with $name",),
         ),
       ),
       drawer: Drawer(),
