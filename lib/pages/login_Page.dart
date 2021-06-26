@@ -1,4 +1,5 @@
 import 'package:exercise_01/pages/home_page.dart';
+// ignore: unused_import
 import 'package:exercise_01/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   moveToHome(BuildContext cont) {
     if (_formKey.currentState!.validate()) {
+      // ignore: unused_label
       onTap:
       Navigator.push(
           context, new MaterialPageRoute(builder: (context) => new HomePage()));
